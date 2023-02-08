@@ -1,0 +1,1 @@
+cd /c/Android/sdk/platform-tools

@@ -49,8 +49,10 @@ import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
  * IMPORTANT: In order to use this OpMode, you need to obtain your own Vuforia license key as
  * is explained below.
  */
-@TeleOp(name = "Concept: TensorFlow Object Detection Webcam", group = "Concept")
+
 @Disabled
+@TeleOp(name = "TensorFlow Helper", group = "Concept")
+
 public class ConceptTensorFlowObjectDetectionWebcam extends LinearOpMode {
 
     /*
@@ -83,7 +85,7 @@ public class ConceptTensorFlowObjectDetectionWebcam extends LinearOpMode {
      * and paste it in to your code on the next line, between the double quotes.
      */
     private static final String VUFORIA_KEY =
-            " -- YOUR NEW VUFORIA KEY GOES HERE  --- ";
+            "ATiC+z7/////AAABmXtA5vl7V0d0gQ4DVekIFZshpexpsey81tveHMKnl6UM/8RhLS9Y46sTtV8cNxkXG73m6igcTqMDrY4lOw0d9h0IvUNC2J5hf2/HfFx7ky9u8KTxh5aBkcTLUgon942jVe1udZoCjWh8k5U3c2Bg0mNiLBS93Y/KuYq9BOteOWfgY3L+igxnD0KnUwY5fhBLKlXR3wNllTnE5Wwhw+NxEzyMi/lzKKRdogcLzNoEGtZ5+pRHJ0JYWxY+n2/KLr6lx3qxz3saTxJNG45SBCUo/li/nLjNYD0oHz7dW5lzTZlLGHRt6AP8bq6lRK7xXZUTeZj/+eqAPqI8l/cM/fa4CmUQ+rqvMYfQcleIfVS8KvsP";
 
     /**
      * {@link #vuforia} is the variable we will use to store our instance of the Vuforia
@@ -146,6 +148,21 @@ public class ConceptTensorFlowObjectDetectionWebcam extends LinearOpMode {
                             telemetry.addData("Image", "%s (%.0f %% Conf.)", recognition.getLabel(), recognition.getConfidence() * 100 );
                             telemetry.addData("- Position (Row/Col)","%.0f / %.0f", row, col);
                             telemetry.addData("- Size (Width/Height)","%.0f / %.0f", width, height);
+
+                            String position = "none detected";
+
+                            if(recognition.getLabel() == LABELS[0]){
+                                position = "left";
+                            }else if(recognition.getLabel() == LABELS[1]){
+                                position = "center";
+                            }else if(recognition.getLabel() == LABELS[2]){
+                                position = "right";
+                            }
+
+                            telemetry.addData("Position:",position);
+
+
+
                         }
                         telemetry.update();
                     }
@@ -157,6 +174,8 @@ public class ConceptTensorFlowObjectDetectionWebcam extends LinearOpMode {
     /**
      * Initialize the Vuforia localization engine.
      */
+
+
     private void initVuforia() {
         /*
          * Configure Vuforia by creating a Parameter object, and passing it to the Vuforia engine.
@@ -168,6 +187,8 @@ public class ConceptTensorFlowObjectDetectionWebcam extends LinearOpMode {
 
         //  Instantiate the Vuforia engine
         vuforia = ClassFactory.getInstance().createVuforia(parameters);
+
+        // Loading trackables is not necessary for the TensorFlow Object Detection engine.
     }
 
     /**
